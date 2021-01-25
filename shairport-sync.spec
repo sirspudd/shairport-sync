@@ -42,12 +42,6 @@ autoreconf -i -f
 rm %{buildroot}/etc/shairport-sync.conf.sample
 install -p -m644 -D scripts/shairport-sync.service %{buildroot}%{_unitdir}/%{name}.service
 
-%pre
-getent group %{name} &>/dev/null || groupadd --system %{name} >/dev/null
-getent passwd %{name} &> /dev/null || useradd --system -c "%{name} User" \
-        -d %{_localstatedir}/%{name} -m -g %{name} -s /sbin/nologin \
-        -G audio %{name} >/dev/null
-
 %post
 %systemd_post %{name}.service
 
